@@ -23,6 +23,7 @@ const sizes = ['S', 'M', 'L', 'XL']
 </script>
 
 <template>
+  <div class="nav-bar"></div>
   <div class="product-display">
     <div class="product-container">
       <div class="product-info">
@@ -42,17 +43,19 @@ const sizes = ['S', 'M', 'L', 'XL']
         <ul>
           <li v-for="detail in details" :key="detail">{{ detail }}</li>
         </ul>
-      </div>
+      
 
-      <div class="product-variants">
+      
         <h2>Variantes</h2>
-        <ul>
-          <li v-for="variant in variants" :key="variant.id">
-            {{ variant.color }}
-          </li>
+         <ul class="variant-list">
+      <li
+        v-for="variant in variants"
+        :key="variant.id"
+        class="variant-circle"
+        :style="{ backgroundColor: variant.color }"
+        :title="variant.color"
+      ></li>
         </ul>
-      </div>
-      <div class="product-sizes">
         <h2>Tailles</h2>
         <ul>
           <li v-for="size in sizes" :key="size">
