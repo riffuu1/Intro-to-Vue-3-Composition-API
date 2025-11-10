@@ -1,67 +1,62 @@
 <script setup>
-import sockGreen from './assets/images/socks_green.jpeg'
-import sockBlue from './assets/images/socks_blue.jpeg'
-const url = "https://sekai.one/piece/saga-8?reprise=true"
-const inventaire = 10
-const onSale = true
-const details = ['50% coton','30% laine', '20% polyester']
-const variants = [
-  {
-    id: 2234,
-    color: "green",
-    image: sockGreen,
-    quantity: 50
-  },
-  {
-    id: 2235,
-    color: "blue",
-    image: sockBlue,
-    quantity: 0
-  }
-]
-const sizes = ['S', 'M', 'L', 'XL']
-</script>
+import { ref } from 'vue'
+import socksGreenImage from './assets/images/socks_green.jpeg'
+import socksBlueImage from './assets/images/socks_blue.jpeg'
 
+const product = ref('Socks')
+const image = ref(socksGreenImage)
+const image2 = ref(socksBlueImage)
+const inStock = true
+  
+const details = ref(['50% cotton', '30% wool', '20% polyester'])
+
+const variants = ref([
+  { id: 2234, color: 'green', image: socksGreenImage },
+  { id: 2235, color: 'blue',image: socksBlueImage },
+])
+
+const cart = ref(0)
+
+
+function increaseCount(n) {
+  cart.value += n
+}
+
+function decreaseCount(n) {
+  cart.value -= n
+}
+
+function updateVariant(variant) {
+  image.value = variant.image
+}
+</script>
+  
 <template>
   <div class="nav-bar"></div>
+  <div class="cart">Cart({{ cart }})</div>
   <div class="product-display">
     <div class="product-container">
-      <div class="product-info">
-        <h1>Socks</h1>
-        <div class="product-image">
-          <img :src="sockGreen" alt="Green Socks" />
-        </div>
-        <a :href="url" target="_blank" rel="noopener">Va regarder One Piece</a>
-        <p v-if="inventaire > 10">En stock</p>
-        <p v-else-if="inventaire >= 1">Faible stock</p>
-        <p v-else>En rupture de stock</p>
-        <p v-if="onSale">En solde !</p>
+      <div class="product-image">    
+        <img v-bind:src="image">
       </div>
-
-      <div class="product-details">
-        <h2>Composants</h2>
+      <div class="product-info">
+        <h1>{{ product }}</h1>
+        <p v-if="inStock">In Stock</p>
+        <p v-else>Out of Stock</p>
         <ul>
-          <li v-for="detail in details" :key="detail">{{ detail }}</li>
+          <li v-for="detail in details">{{ detail }}</li>
         </ul>
-      
-
-      
-        <h2>Variantes</h2>
-         <ul class="variant-list">
-      <li
-        v-for="variant in variants"
-        :key="variant.id"
-        class="variant-circle"
-        :style="{ backgroundColor: variant.color }"
-        :title="variant.color"
-      ></li>
-        </ul>
-        <h2>Tailles</h2>
-        <ul>
-          <li v-for="size in sizes" :key="size">
-            {{ size }}
-          </li>
-        </ul>
+        <div class="variant-container">
+          <div
+              v-for="variant in variants"
+              :key="variant.id"
+              class="color-circle"
+              :style="{ backgroundColor: variant.color }"
+              @mouseover="updateVariant(variant)"
+          ></div>
+        </div>
+      <button class=button @click="$emit(increaseCount(1))" >Add to Cart</button>
+      <button class=button_remove @click="$emit(decreaseCount(1))" >Remove to Cart</button>
       </div>
     </div>
   </div>
