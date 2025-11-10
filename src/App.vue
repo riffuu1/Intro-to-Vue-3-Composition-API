@@ -11,7 +11,10 @@ const title = computed(()=>{
 
 const image = ref(socksGreenImage)
 const inStock = ref(false)
-  
+const onSale = ref(false)
+const sale = computed (()=>{
+  return onSale.value ? 'est en action': ""
+})
 const details = ref(['50% cotton', '30% wool', '20% polyester'])
 
 const variants = ref([
@@ -43,6 +46,7 @@ const selectedVariant = ref(0)
       </div>
       <div class="product-info">
         <h1>{{title}}</h1>
+        <p>{{sale}}</p>
         <p v-if="inStock">In Stock</p>
         <p v-else>Out of Stock</p>
         <ul>
