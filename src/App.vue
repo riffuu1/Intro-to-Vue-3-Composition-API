@@ -9,10 +9,14 @@ const premium = ref(true)
 const updateCart = () => {
   cart.value += 1
 }
+
+const removeCart = () => {
+  cart.value -=1
+}
 </script>
 
 <template>
   <div class="nav-bar"></div>
   <div class="cart">({{ cart }})</div>
-  <ProductDisplay :premium="premium" @add-to-cart="updateCart" ></ProductDisplay>
+  <ProductDisplay :premium="premium" @add-to-cart="updateCart" @remove-to-cart="removeCart" ></ProductDisplay>
 </template>
