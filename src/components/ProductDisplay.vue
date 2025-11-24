@@ -12,9 +12,8 @@ const props = defineProps({
 
 const product = ref('Socks')
 const brand = ref('Vue Mastery')
-
 const selectedVariant = ref(0)
-  
+const emit = defineEmits(['add-to-cart'])
 const details = ref(['50% cotton', '30% wool', '20% polyester'])
 
 const variants = ref([
@@ -43,7 +42,7 @@ const shipping = computed(() => {
   }
 })
 
-const addToCart = () => cart.value += 1
+const addToCart = () => emit("add-to-cart")
 
 const updateVariant = (index) => {
   selectedVariant.value = index
@@ -76,7 +75,7 @@ const updateVariant = (index) => {
           class="button" 
           :class="{ disabledButton: !inStock }"
           :disabled="!inStock"
-          v-on:click="addToCart"
+          v-on:click= "addToCart"
         >
           Add to cart
         </button>
