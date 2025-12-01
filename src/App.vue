@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import ProductDisplay from '@/components/ProductDisplay.vue'
+import ReviewForm from "@/components/ReviewForm.vue";
 
 const cart = ref([])
 const premium = ref(true)
